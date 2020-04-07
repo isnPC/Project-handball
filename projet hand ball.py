@@ -1,5 +1,16 @@
-﻿def affichageterrain():
+﻿from tkinter import *
+fenetre = Tk()
+def affichageterrain():
     """affiche le terrain"""
+    canvas = Canvas(fenetre, width=800, height=400, background='white')
+    balle = canvas.create_oval(-200,20,200,380, fill="blue")
+    balle = canvas.create_oval(600,20,1000,380, fill="yellow")
+    rondcentre= canvas.create_oval(340,140,460,260)
+    milieu= canvas.create_line(400,0,400,400)
+    but=canvas.create_rectangle(0,160,40,240)
+    but=canvas.create_rectangle(760,160,800,240)
+    texte=canvas.create_text(27,7,text="coté allier")
+    canvas.grid()
 def selectionnomjoueur():
     """demande le nom des joueurs et les mets dans une liste"""
 
@@ -34,9 +45,7 @@ def enregistrerfichier(joueur,action,reussit,positionx,positiony):
     Sortie: stocke toute les information dans un fichier excel"""
     positionx=str(positionx)
     positiony=str(positiony)
-    nomfic=[0,".csv"]
-    nomfic[0]=joueur
-    nomfic= "".join(nomfic)
+    nomfic= joueur + ".csv"
     envoie=[action,reussit,positionx,positiony,'\n']
     envoie=",".join(envoie)
     with open(nomfic,'a') as fic:
@@ -51,3 +60,6 @@ def affichageposition():
 def affichagestat():
      """Entrée: le pourcentage de réussite, le nombre d'action réussit et louper a partir du fichier exel et le joueur séléctionner
      Affiche le pourcentage de réussite à coté de chaque action et le nombre de réussite-le nombre d'echecs acoté du pourcentage """
+
+affichageterrain()
+fenetre.mainloop()
