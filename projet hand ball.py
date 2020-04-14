@@ -25,20 +25,20 @@ def affichagejoueur():
     """affiche la liste des joueur avec les prenom-numéro de demander et lance une fonction pour savoir qu'elle est le joueur séléctionner"""
     """fait par Serkan"""
     global indicJ
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J1.csv"),fg="blue").grid(row=4,column=3)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J2.csv"),fg="blue").grid(row=4,column=4)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J3.csv"),fg="blue").grid(row=4,column=5)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J4.csv"),fg="blue").grid(row=4,column=6)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J5.csv"),fg="blue").grid(row=4,column=7)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J6.csv"),fg="blue").grid(row=4,column=8)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J7.csv"),fg="blue").grid(row=4,column=9)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA1.csv"),fg="orange").grid(row=6,column=3)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA2.csv"),fg="orange").grid(row=6,column=4)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA3.csv"),fg="orange").grid(row=6,column=5)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA4.csv"),fg="orange").grid(row=6,column=6)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA5.csv"),fg="orange").grid(row=6,column=7)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA6.csv"),fg="orange").grid(row=6,column=8)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA7.csv"),fg="orange").grid(row=6,column=9)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J1.csv"),fg="blue").grid(row=4,column=3)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J2.csv"),fg="blue").grid(row=4,column=4)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J3.csv"),fg="blue").grid(row=4,column=5)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J4.csv"),fg="blue").grid(row=4,column=6)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J5.csv"),fg="blue").grid(row=4,column=7)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J6.csv"),fg="blue").grid(row=4,column=8)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J7.csv"),fg="blue").grid(row=4,column=9)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA1.csv"),fg="orange").grid(row=6,column=3)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA2.csv"),fg="orange").grid(row=6,column=4)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA3.csv"),fg="orange").grid(row=6,column=5)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA4.csv"),fg="orange").grid(row=6,column=6)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA5.csv"),fg="orange").grid(row=6,column=7)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA6.csv"),fg="orange").grid(row=6,column=8)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA7.csv"),fg="orange").grid(row=6,column=9)
     indicJ=Label(fenetre)
 
 def selectionjoueur(place):
@@ -63,12 +63,12 @@ def affichageaction():
     """affiche la liste d'action et lance une fonction pour savoir qu'elle est l'action séléctionner"""
     """fait par Serkan"""
     global indicA
-    bouton=Button(fenetre,text='But',command=lambda : selectionaction('but')).grid(row=1,column=3)
-    bouton=Button(fenetre,text='Passe',command=lambda : selectionaction('passe')).grid(row=1,column=4)
-    bouton=Button(fenetre,text='Stop provoqué',command=lambda : selectionaction('stopprovqué')).grid(row=1,column=5)
-    bouton=Button(fenetre,text='Stop subit',command=lambda : selectionaction('stopsubit')).grid(row=1,column=6)
-    bouton=Button(fenetre,text='Balle perdu',command=lambda : selectionaction('balleperdu')).grid(row=1,column=7)
-    bouton=Button(fenetre,text='Interception',command=lambda : selectionaction('interception')).grid(row=1,column=8)
+    Button(fenetre,text='But',command=lambda : selectionaction('but')).grid(row=1,column=3)
+    Button(fenetre,text='Passe',command=lambda : selectionaction('passe')).grid(row=1,column=4)
+    Button(fenetre,text='Stop provoqué',command=lambda : selectionaction('stopprovqué')).grid(row=1,column=5)
+    Button(fenetre,text='Stop subit',command=lambda : selectionaction('stopsubit')).grid(row=1,column=6)
+    Button(fenetre,text='Balle perdu',command=lambda : selectionaction('balleperdu')).grid(row=1,column=7)
+    Button(fenetre,text='Interception',command=lambda : selectionaction('interception')).grid(row=1,column=8)
     indicA=Label(fenetre)
 
 def selectionaction(mouv):
