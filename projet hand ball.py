@@ -7,13 +7,13 @@ def affichageterrain():
     canvas = Canvas(fenetre, width=1000, height=500, background='white')
     curseur=0
     canvas.bind("<Button-1>", emplacementdonner)
-    terrain = canvas.create_rectangle(0,0,1000,500)
-    zone = canvas.create_arc(-250,25,250,475, fill="blue",start=270,extent=180)
-    zone = canvas.create_arc(750,25,1250,475, fill="yellow",start=90,extent=180)
-    rondcentre= canvas.create_oval(425,175,575,325)
-    milieu= canvas.create_line(500,0,500,500)
-    but=canvas.create_rectangle(0,200,50,300)
-    but=canvas.create_rectangle(950,200,1000,300)
+    canvas.create_rectangle(0,0,1000,500)
+    canvas.create_arc(-250,25,250,475, fill="blue",start=270,extent=180)
+    canvas.create_arc(750,25,1250,475, fill="yellow",start=90,extent=180)
+    canvas.create_oval(425,175,575,325)
+    canvas.create_line(500,0,500,500)
+    canvas.create_rectangle(0,200,50,300)
+    canvas.create_rectangle(950,200,1000,300)
     canvas.grid(row = 0,column = 0,columnspan=20)
 
 def selectionnomjoueur():
@@ -23,20 +23,20 @@ def selectionnomjoueur():
 def affichagejoueur():
     """affiche la liste des joueur"""
     """fait par Serkan"""
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J1.csv"),fg="blue").grid(row=3,column=3)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J2.csv"),fg="blue").grid(row=3,column=4)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J3.csv"),fg="blue").grid(row=3,column=5)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J4.csv"),fg="blue").grid(row=3,column=6)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J5.csv"),fg="blue").grid(row=3,column=7)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J6.csv"),fg="blue").grid(row=3,column=8)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J7.csv"),fg="blue").grid(row=3,column=9)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA1.csv"),fg="orange").grid(row=5,column=3)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA2.csv"),fg="orange").grid(row=5,column=4)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA3.csv"),fg="orange").grid(row=5,column=5)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA4.csv"),fg="orange").grid(row=5,column=6)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA5.csv"),fg="orange").grid(row=5,column=7)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA6.csv"),fg="orange").grid(row=5,column=8)
-    bouton=Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA7.csv"),fg="orange").grid(row=5,column=9)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J1.csv"),fg="blue").grid(row=3,column=3)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J2.csv"),fg="blue").grid(row=3,column=4)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J3.csv"),fg="blue").grid(row=3,column=5)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J4.csv"),fg="blue").grid(row=3,column=6)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J5.csv"),fg="blue").grid(row=3,column=7)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J6.csv"),fg="blue").grid(row=3,column=8)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J7.csv"),fg="blue").grid(row=3,column=9)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA1.csv"),fg="orange").grid(row=5,column=3)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA2.csv"),fg="orange").grid(row=5,column=4)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA3.csv"),fg="orange").grid(row=5,column=5)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA4.csv"),fg="orange").grid(row=5,column=6)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA5.csv"),fg="orange").grid(row=5,column=7)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA6.csv"),fg="orange").grid(row=5,column=8)
+    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA7.csv"),fg="orange").grid(row=5,column=9)
 def selectionjoueur(place):
     """recupere le nom du joueur séléctionner
     Crée une variable global avec le joueur"""
@@ -46,12 +46,12 @@ def selectionjoueur(place):
 def affichageaction():
     """affiche la liste d'action"""
     """fait par Serkan"""
-    bouton=Button(fenetre,text='But',command=lambda : selectionaction('but')).grid(row=1,column=3)
-    bouton=Button(fenetre,text='Passe',command=lambda : selectionaction('passe')).grid(row=1,column=4)
-    bouton=Button(fenetre,text='Stop provoqué',command=lambda : selectionaction('stopprovqué')).grid(row=1,column=5)
-    bouton=Button(fenetre,text='Stop subit',command=lambda : selectionaction('stopsubit')).grid(row=1,column=6)
-    bouton=Button(fenetre,text='Balle perdu',command=lambda : selectionaction('balleperdu')).grid(row=1,column=7)
-    bouton=Button(fenetre,text='Interception',command=lambda : selectionaction('interception')).grid(row=1,column=8)
+    Button(fenetre,text='But',command=lambda : selectionaction('but')).grid(row=1,column=3)
+    Button(fenetre,text='Passe',command=lambda : selectionaction('passe')).grid(row=1,column=4)
+    Button(fenetre,text='Stop provoqué',command=lambda : selectionaction('stopprovqué')).grid(row=1,column=5)
+    Button(fenetre,text='Stop subit',command=lambda : selectionaction('stopsubit')).grid(row=1,column=6)
+    Button(fenetre,text='Balle perdu',command=lambda : selectionaction('balleperdu')).grid(row=1,column=7)
+    Button(fenetre,text='Interception',command=lambda : selectionaction('interception')).grid(row=1,column=8)
 def selectionaction(mouv):
     """recupere l'action séléctionner
     Crée une variable global avec l'action"""
@@ -62,8 +62,8 @@ def selectionaction(mouv):
 def affichagelouperreussi():
     """affiche l'option reussit ou louper"""
     """fait par Alexis"""
-    bouton=Button(fenetre,text='Réussi',command=lambda : selectionlouperreussi('reussi')).grid(row=1,column=15)
-    bouton=Button(fenetre,text='Louper',command=lambda : selectionlouperreussi('louper')).grid(row=1,column=16)
+    Button(fenetre,text='Réussi',command=lambda : selectionlouperreussi('reussi')).grid(row=1,column=15)
+    Button(fenetre,text='Louper',command=lambda : selectionlouperreussi('louper')).grid(row=1,column=16)
 def selectionlouperreussi(lp):
     """recupere si l'action est reussit ou louper
     Crée une variable global avec le résultat"""
@@ -72,7 +72,7 @@ def selectionlouperreussi(lp):
     reussite=lp
 def affichageresultat():
     """affiche un bouton résultat"""
-    bouton=Button(fenetre,text='Résultat',command=selectionresultat).grid(row=3,column=19)
+    Button(fenetre,text='Résultat',command=selectionresultat).grid(row=3,column=19)
 def selectionresultat():
     """recupere si l'utilisateur appuye sur résultat
     renvoie une variable pour voir les résultats"""
@@ -87,7 +87,7 @@ def emplacementdonner(event):
 
 def validation():
     """bouton qui valide les résultat rentré et fait enregistrer les valeur"""
-    bouton=Button(fenetre,text='Validé',command=enregistrerfichier).grid(row=1,column=19)
+    Button(fenetre,text='Validé',command=enregistrerfichier).grid(row=1,column=19)
 
 def enregistrerfichier():
     """stocke les information dans un fichier excel
