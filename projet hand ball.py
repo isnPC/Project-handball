@@ -14,14 +14,14 @@ def veriffichier():
         for fichier in listenomfichier:
             with open(fichier) as fic:
                 if fic.readline()!="":
-                    if askyesno('Titre 1', 'Il existe déjà des données enregistrer souhaiter vous les effacer?'):
+                    if askyesno('','Il existe déjà des données enregistrées souhaiter vous les effacer?'):
                         for joueur in range(14):
                             with open(listenomfichier[joueur],'w') as fic:
                                 fic.write("")
-                        showinfo('Titre 2', 'Les données ont été supprimé')
+                        showinfo('','Les données ont été supprimées')
                         return
                     else:
-                        showinfo('Titre 2', 'Les données que vous allez enregistrer seront ajoutées aux anciennes')
+                        showinfo('','Les données que vous allez enregistrés seront ajoutées aux anciennes')
                         return
     else:
         #le fichier n'existe pas
@@ -95,6 +95,7 @@ def affichageaction():
     Button(fenetre,text='Stop subit',command=lambda : selectionaction('stopsubit')).grid(row=1,column=6)
     Button(fenetre,text='Balle perdu',command=lambda : selectionaction('balleperdu')).grid(row=1,column=7)
     Button(fenetre,text='Interception',command=lambda : selectionaction('interception')).grid(row=1,column=8)
+    Button(fenetre,text='Arrêt',command=lambda : selectionaction('arret')).grid(row=1,column=9)
     indicA=Label(fenetre)
 
 def selectionaction(mouv):
@@ -103,7 +104,7 @@ def selectionaction(mouv):
     global action,indicA
     action = mouv
     indicA.destroy()
-    listeaction=["but","passe","stopprovqué","stopsubit","balleperdu","interception"]
+    listeaction=["but","passe","stopprovqué","stopsubit","balleperdu","interception","arret"]
     num=listeaction.index(action)
     if num<=6:
         indicA=Label(fenetre, text="séléctionné↑",bg="green")
@@ -147,12 +148,22 @@ def selectionresultat():
         loup.destroy()
 
 def emplacementdonner(event):
-    """recupere l'endroit où l'utilisateur à cliquer et le stocke dans deux variables"""
+    """recupere l'endroit où l'utilisateur à cliquer et le stocke dans deux variables
+    affiche un message si l'utilisateur clique en dehors du terrain"""
     global posx,posy,curseur
-    posx = event.x
-    posy = event.y
+    posx=0
+    posy=0
+    x = event.x
+    y = event.y
     canvas.delete(curseur)
-    curseur= canvas.create_oval(posx-3,posy-3,posx+3,posy+3,fill="black")
+    if 0<=x<=1000 and 0<=y<=500:
+        posx = x
+        posy = y
+        curseur= canvas.create_oval(posx-3,posy-3,posx+3,posy+3,fill="black")
+    else:
+        showerror('Vous avez cliqué en dehors du terrian','Veulliez cliquer dans le terrain')
+
+
 
 def validation():
     """bouton qui valide les résultat rentré et fait enregistrer les valeur"""
@@ -165,13 +176,13 @@ def enregistrerfichier():
     global posx, posy, action, joueur, reussite
     if posx=='none' or action=='none' or reussite=='none' or joueur=='none':
         if posx=='none':
-            showerror("Titre 4", "Vous n'avez pas séléctionnez la position")
+            showerror("", "Vous n'avez pas séléctionnez la position")
         elif action=='none':
-            showerror("Titre 4", "Vous n'avez pas séléctionnez l'action")
+            showerror("", "Vous n'avez pas séléctionnez l'action")
         elif reussite=='none':
-            showerror("Titre 4", "Vous n'avez pas séléctionnez si l'action est réussite")
+            showerror("", "Vous n'avez pas séléctionnez si l'action est réussite")
         elif joueur=='none':
-            showerror("Titre 4", "Vous n'avez pas séléctionnez le joueur")
+            showerror("", "Vous n'avez pas séléctionnez le joueur")
 
     else:
         posx=str(posx)
@@ -210,9 +221,9 @@ def calculestat():
     global action,joueur
     if action=='none' or joueur=='none':
         if action=='none':
-            showerror("Titre 4", "Vous n'avez pas séléctionnez l'action")
+            showerror("", "Vous n'avez pas séléctionnez l'action")
         elif joueur=='none':
-            showerror("Titre 4", "Vous n'avez pas séléctionnez le joueur")
+            showerror("", "Vous n'avez pas séléctionnez le joueur")
         return "error"
 
     else:
@@ -290,7 +301,6 @@ def affichagestatzone():
 def affichagestat():
      """Entrée: le pourcentage de réussite, le nombre d'action réussit et louper a partir du fichier exel et l'action séléctionner
      Affiche le pourcentage de réussite, le nombre de réussite et le nombre d'echecs pour l'action séléctionnez"""
-
      if stat[0]==0:
         Label(fenetre, text="Manque d'informations",width="21").grid(row=1,column=15)
         Label(fenetre, text="Manque d'informations",width="21", bg = "green").grid(row=3,column=15)
@@ -312,11 +322,11 @@ def boutonexit():
 def exit():
     """Demande si il faut enlever toutes les informations de chaque fichier pour pouvoir re-écrire sur les même fichiers à la prochaine utilisation
     ou si il faut garder les informations enregistré"""
-    if askyesno('Titre 1', 'Voulez vous effacer toute les données enregistré'):
+    if askyesno('', 'Voulez vous effacer toute les données enregistré'):
         for joueur in range(14):
             with open(listenomfichier[joueur],'w') as fic:
                 fic.write("")
-        showinfo('Titre 2', 'Les données ont été supprimé')
+        showinfo('', 'Les données ont été supprimé')
         fenetre.destroy()
     else:
         fenetre.destroy()
