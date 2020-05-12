@@ -7,7 +7,7 @@ def veriffichier():
     """verifier l'état des fichier
     si ils n'existent pas, il les créent
     si ils existent, il vérifi si ils sont vide, si non demande si on garde les données"""
-    global listenomfichier
+    global listenomfichier,action,joueur
     listenomfichier=["J1.csv","J2.csv","J3.csv","J4.csv","J5.csv","J6.csv","J7.csv","JA1.csv","JA2.csv","JA3.csv","JA4.csv","JA5.csv","JA6.csv","JA7.csv"]
     if os.path.isfile('J1.csv'):
         #le fichier existe
@@ -21,7 +21,12 @@ def veriffichier():
                         showinfo('','Les données ont été supprimées')
                         return
                     else:
-                        showinfo('','Les données que vous allez enregistrés seront ajoutées aux anciennes')
+                        if askyesno('','Voulez-vous aller analyser les données maintenant'):
+                            action=''
+                            joueur='J1.csv'
+                            selectionresultat()
+                        else:
+                            showinfo('','Les données que vous allez enregistrés seront ajoutées aux anciennes')
                         return
     else:
         #le fichier n'existe pas
@@ -48,6 +53,33 @@ def affichageterrain():
     but=canvas.create_rectangle(950,200,1000,300)
     canvas.grid(row = 0,column = 0,columnspan=20)
 
+
+def qljoueur(joueur):
+    nb=joueurselec.index("")
+    joueurselec[nb]=joueur
+
+def mesjoueur():
+    global nom
+    with open('nom_joueur.txt','r') as fic:
+        fic.readline()
+        nom=fic.readline()
+        nom=nom.split(';')
+
+    Button(f,text=nom[0],command=lambda : qljoueur(nom[0])).grid(row=0,column=0)
+    Button(f,text=nom[1],command=lambda : qljoueur(nom[1])).grid(row=0,column=1)
+    Button(f,text=nom[2],command=lambda : qljoueur(nom[2])).grid(row=0,column=2)
+    Button(f,text=nom[3],command=lambda : qljoueur(nom[3])).grid(row=1,column=0)
+    Button(f,text=nom[4],command=lambda : qljoueur(nom[4])).grid(row=1,column=1)
+    Button(f,text=nom[5],command=lambda : qljoueur(nom[5])).grid(row=1,column=2)
+    Button(f,text=nom[6],command=lambda : qljoueur(nom[6])).grid(row=1,column=3)
+    Button(f,text=nom[7],command=lambda : qljoueur(nom[7])).grid(row=2,column=0)
+    Button(f,text=nom[8],command=lambda : qljoueur(nom[8])).grid(row=2,column=1)
+    Button(f,text=nom[9],command=lambda : qljoueur(nom[9])).grid(row=2,column=2)
+    Button(f,text="valider",command=validjoueur).grid(row=3,column=0)
+
+def validjoueur():
+    f.destroy()
+
 def selectionnomjoueur():
     """demande le nom des joueurs et retourne le nom et le numéro rentré"""
     return "Serkan-42"
@@ -56,13 +88,14 @@ def selectionnomjoueur():
 def affichagejoueur():
     """affiche la liste des joueur avec les prenom-numéro de demander et lance une fonction pour savoir qu'elle est le joueur séléctionner"""
     global indicJ
-    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J1.csv"),fg="blue").grid(row=3,column=3)
-    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J2.csv"),fg="blue").grid(row=3,column=4)
-    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J3.csv"),fg="blue").grid(row=3,column=5)
-    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J4.csv"),fg="blue").grid(row=3,column=6)
-    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J5.csv"),fg="blue").grid(row=3,column=7)
-    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J6.csv"),fg="blue").grid(row=3,column=8)
-    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("J7.csv"),fg="blue").grid(row=3,column=9)
+    Button(fenetre,text=joueurselec[0],command=lambda : selectionjoueur("J1.csv"),fg="blue").grid(row=3,column=3)
+    Button(fenetre,text=joueurselec[1],command=lambda : selectionjoueur("J2.csv"),fg="blue").grid(row=3,column=4)
+    Button(fenetre,text=joueurselec[2],command=lambda : selectionjoueur("J3.csv"),fg="blue").grid(row=3,column=5)
+    Button(fenetre,text=joueurselec[3],command=lambda : selectionjoueur("J4.csv"),fg="blue").grid(row=3,column=6)
+    Button(fenetre,text=joueurselec[4],command=lambda : selectionjoueur("J5.csv"),fg="blue").grid(row=3,column=7)
+    Button(fenetre,text=joueurselec[5],command=lambda : selectionjoueur("J6.csv"),fg="blue").grid(row=3,column=8)
+    Button(fenetre,text=joueurselec[6],command=lambda : selectionjoueur("J7.csv"),fg="blue").grid(row=3,column=9)
+
     Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA1.csv"),fg="blue").grid(row=5,column=3)
     Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA2.csv"),fg="blue").grid(row=5,column=4)
     Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA3.csv"),fg="blue").grid(row=5,column=5)
@@ -214,6 +247,7 @@ def zonechoisi(endroit):
     """retourne les coordonnées de la zone où l'utilisateur veut voir les emplacement sous la forme[limitegauchex,limdroitex,limitehauty,limitebasy]"""
     global zone
     zone=endroit
+    selectionresultat()
 
 def calculestat():
     """recupere toute les stats pour l'action demander et le joueur
@@ -331,11 +365,18 @@ def exit():
     else:
         fenetre.destroy()
 
+
+joueurselec=[""]*9
+f=Tk()
+mesjoueur()
+f.mainloop()
+
 zone=[0,1001,0,501]
 posx='none'
 joueur='none'
 action='none'
 reussite='none'
+
 fenetre =Tk()
 affichageterrain()
 pourcentage=Label(fenetre)
