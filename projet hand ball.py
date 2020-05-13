@@ -7,36 +7,59 @@ def veriffichier():
     """verifier l'état des fichier
     si ils n'existent pas, il les créent
     si ils existent, il vérifi si ils sont vide, si non demande si on garde les données"""
-    global listenomfichier,action,joueur
+    global listenomfichier,action,joueur,joueurselec,f
+
     listenomfichier=["J1.csv","J2.csv","J3.csv","J4.csv","J5.csv","J6.csv","J7.csv","JA1.csv","JA2.csv","JA3.csv","JA4.csv","JA5.csv","JA6.csv","JA7.csv"]
     if os.path.isfile('J1.csv'):
         #le fichier existe
         for fichier in listenomfichier:
             with open(fichier) as fic:
                 if fic.readline()!="":
-                    if askyesno('','Il existe déjà des données enregistrées souhaiter vous les effacer?'):
-                        for joueur in range(14):
-                            with open(listenomfichier[joueur],'w') as fic:
-                                fic.write("")
-                        showinfo('','Les données ont été supprimées')
-                        return
-                    else:
-                        if askyesno('','Voulez-vous aller analyser les données maintenant'):
-                            action=''
-                            joueur='J1.csv'
-                            selectionresultat()
+                    if fic.readline()!="":
+                        if askyesno('','Il existe déjà des données enregistrées souhaiter vous les effacer?',parent=f):
+                            if askyesno('','Voulez vous garder les joueurs séléctionné la fois précédente ?',parent=f):
+                                rechercheselec()
+                                creafichier()
+                                f.destroy()
+                                return
+                            else:
+                                mesjoueur()
+                                showinfo('','Toutes données ont été supprimées',parent=f)
+                                return
                         else:
-                            showinfo('','Les données que vous allez enregistrés seront ajoutées aux anciennes')
-                        return
+                            showinfo('','Les données que vous allez enregistrés seront ajoutées aux anciennes',parent=f)
+                            f.destroy()
+                            return
+                    else:
+                        if askyesno('','Voulez vous garder les joueurs séléctionné la fois précédente ?',parent=f):
+                            rechercheselec()
+                            creafichier()
+                            f.destroy()
+                            return
+                        else:
+                            mesjoueur()
+                            return
+                else:
+                    mesjoueur()
+                    return
     else:
         #le fichier n'existe pas
-        creafichier()
+        mesjoueur()
+        return
 
 def creafichier():
-    """Crée tout les fichiers dont le programme a besoin, si les fichiers existe il ne l'est modifie pas"""
-    for fichier in range(14):
-        with open(listenomfichier[fichier],'a') as fic:
-            fic.write("")
+    """Crée tout les fichiers dont le programme a besoin, avec à l'intérieur en première ligne le nom du joueur"""
+    global listenomjoueur,joueurselec
+    for joueur in range(7):
+        with open(listenomfichier[joueur],'w') as fic:
+            envoie=[joueurselec[joueur],"\n"]
+            envoie=",".join(envoie)
+            fic.write(envoie)
+    for joueur in range(7,14):
+        with open(listenomfichier[joueur],'w') as fic:
+            envoie=[listenomfichier[joueur],"\n"]
+            envoie=",".join(envoie)
+            fic.write(envoie)
 
 def affichageterrain():
     """affiche le terrain"""
@@ -55,30 +78,47 @@ def affichageterrain():
 
 
 def qljoueur(joueur):
+    """récupére les joueurs des joueur séléctionner et les stock dans la liste joueurselec"""
+    global joueurselec
     nb=joueurselec.index("")
     joueurselec[nb]=joueur
 
+
 def mesjoueur():
-    global nom
+    """cherche dans le document les prénom-numéro des joueurs et affiche des boutons avec les nom récupéré"""
+    global f
     with open('nom_joueur.txt','r') as fic:
         fic.readline()
         nom=fic.readline()
         nom=nom.split(';')
-
-    Button(f,text=nom[0],command=lambda : qljoueur(nom[0])).grid(row=0,column=0)
-    Button(f,text=nom[1],command=lambda : qljoueur(nom[1])).grid(row=0,column=1)
-    Button(f,text=nom[2],command=lambda : qljoueur(nom[2])).grid(row=0,column=2)
-    Button(f,text=nom[3],command=lambda : qljoueur(nom[3])).grid(row=1,column=0)
-    Button(f,text=nom[4],command=lambda : qljoueur(nom[4])).grid(row=1,column=1)
-    Button(f,text=nom[5],command=lambda : qljoueur(nom[5])).grid(row=1,column=2)
-    Button(f,text=nom[6],command=lambda : qljoueur(nom[6])).grid(row=1,column=3)
-    Button(f,text=nom[7],command=lambda : qljoueur(nom[7])).grid(row=2,column=0)
-    Button(f,text=nom[8],command=lambda : qljoueur(nom[8])).grid(row=2,column=1)
-    Button(f,text=nom[9],command=lambda : qljoueur(nom[9])).grid(row=2,column=2)
-    Button(f,text="valider",command=validjoueur).grid(row=3,column=0)
+    Label(f,text="Choississez vos 7 joueurs").grid(row=0,column=0,columnspan=3)
+    Button(f,text=nom[0],command=lambda : qljoueur(nom[0])).grid(row=1,column=0)
+    Button(f,text=nom[1],command=lambda : qljoueur(nom[1])).grid(row=1,column=1)
+    Button(f,text=nom[2],command=lambda : qljoueur(nom[2])).grid(row=1,column=2)
+    Button(f,text=nom[3],command=lambda : qljoueur(nom[3])).grid(row=2,column=0)
+    Button(f,text=nom[4],command=lambda : qljoueur(nom[4])).grid(row=2,column=1)
+    Button(f,text=nom[5],command=lambda : qljoueur(nom[5])).grid(row=2,column=2)
+    Button(f,text=nom[6],command=lambda : qljoueur(nom[6])).grid(row=2,column=3)
+    Button(f,text=nom[7],command=lambda : qljoueur(nom[7])).grid(row=3,column=0)
+    Button(f,text=nom[8],command=lambda : qljoueur(nom[8])).grid(row=3,column=1)
+    Button(f,text=nom[9],command=lambda : qljoueur(nom[9])).grid(row=3,column=2)
+    Button(f,text="valider",command=validjoueur).grid(row=4,column=1)
 
 def validjoueur():
+    """ferme la fenetre pour selectionner les joueurs et lance la fonctions pour crée tout les fichiers"""
+    creafichier()
     f.destroy()
+
+def rechercheselec():
+    """recherche et récupére dans tout les fichiers des joueurs les noms des joueurs qui sont stocker dedans et les stocke dans la liste joueurselec"""
+    global joueurselec
+    n=0
+    for fichier in listenomfichier:
+        with open(fichier) as fic:
+            selec=fic.readline()
+            selec=selec.strip()
+            joueurselec[n]=selec.replace(',','')
+        n=n+1
 
 def selectionnomjoueur():
     """demande le nom des joueurs et retourne le nom et le numéro rentré"""
@@ -86,8 +126,9 @@ def selectionnomjoueur():
     """input("Entrez le prénom du joueur comme suit:Prénom-numéro")"""
 
 def affichagejoueur():
-    """affiche la liste des joueur avec les prenom-numéro de demander et lance une fonction pour savoir qu'elle est le joueur séléctionner"""
+    """affiche la liste des joueur avec les prenom-numéro choisi ou récupéré dans les fichiers et lance une fonction pour savoir qu'elle est le joueur séléctionner"""
     global indicJ
+    rechercheselec()
     Button(fenetre,text=joueurselec[0],command=lambda : selectionjoueur("J1.csv"),fg="blue").grid(row=3,column=3)
     Button(fenetre,text=joueurselec[1],command=lambda : selectionjoueur("J2.csv"),fg="blue").grid(row=3,column=4)
     Button(fenetre,text=joueurselec[2],command=lambda : selectionjoueur("J3.csv"),fg="blue").grid(row=3,column=5)
@@ -96,13 +137,13 @@ def affichagejoueur():
     Button(fenetre,text=joueurselec[5],command=lambda : selectionjoueur("J6.csv"),fg="blue").grid(row=3,column=8)
     Button(fenetre,text=joueurselec[6],command=lambda : selectionjoueur("J7.csv"),fg="blue").grid(row=3,column=9)
 
-    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA1.csv"),fg="blue").grid(row=5,column=3)
-    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA2.csv"),fg="blue").grid(row=5,column=4)
-    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA3.csv"),fg="blue").grid(row=5,column=5)
-    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA4.csv"),fg="blue").grid(row=5,column=6)
-    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA5.csv"),fg="blue").grid(row=5,column=7)
-    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA6.csv"),fg="blue").grid(row=5,column=8)
-    Button(fenetre,text=selectionnomjoueur(),command=lambda : selectionjoueur("JA7.csv"),fg="blue").grid(row=5,column=9)
+    Button(fenetre,text=joueurselec[7],command=lambda : selectionjoueur("JA1.csv"),fg="blue").grid(row=5,column=3)
+    Button(fenetre,text=joueurselec[8],command=lambda : selectionjoueur("JA2.csv"),fg="blue").grid(row=5,column=4)
+    Button(fenetre,text=joueurselec[9],command=lambda : selectionjoueur("JA3.csv"),fg="blue").grid(row=5,column=5)
+    Button(fenetre,text=joueurselec[10],command=lambda : selectionjoueur("JA4.csv"),fg="blue").grid(row=5,column=6)
+    Button(fenetre,text=joueurselec[11],command=lambda : selectionjoueur("JA5.csv"),fg="blue").grid(row=5,column=7)
+    Button(fenetre,text=joueurselec[12],command=lambda : selectionjoueur("JA6.csv"),fg="blue").grid(row=5,column=8)
+    Button(fenetre,text=joueurselec[13],command=lambda : selectionjoueur("JA7.csv"),fg="blue").grid(row=5,column=9)
     indicJ=Label(fenetre)
 
 def selectionjoueur(place):
@@ -134,10 +175,10 @@ def affichageaction():
 def selectionaction(mouv):
     """recupere l'action séléctionner
     Crée une variable global avec l'action et affiche un indicateur sous l'action choisi"""
-    global action,indicA
+    global action,indicA,listeaction
     action = mouv
     indicA.destroy()
-    listeaction=["but","passe","stopprovqué","stopsubit","balleperdu","interception","arret"]
+
     num=listeaction.index(action)
     if num<=6:
         indicA=Label(fenetre, text="séléctionné↑",bg="green")
@@ -179,6 +220,7 @@ def selectionresultat():
         affichagestatzone()
         reu.destroy()
         loup.destroy()
+        boutontableur()
 
 def emplacementdonner(event):
     """recupere l'endroit où l'utilisateur à cliquer et le stocke dans deux variables
@@ -349,6 +391,56 @@ def affichagestat():
         Label(fenetre, text=nbreussite,width="21", bg = "green").grid(row=3,column=15)
         Label(fenetre, text=nbechec,width="21", bg="red").grid(row=5,column=15)
 
+def tableur():
+    """récupère toutes les infos dans tout les fichier
+    Crée un grand fichier avec le nombre de réusite sur le nombre totale d'action et le pourcentage de réussite pour chaque action de chaque joueur"""
+    global listenomfichier,listeaction
+    with open('stat_general.csv','w') as fic:
+            fic.write("joueur/action,But,Passe,Stop provoqué,Stop subit,Balle perdu,Interception,Arrêt,\n")
+    for joueur in listenomfichier:
+        with open(joueur,'r') as fic:
+            personne=fic.readline()
+        personne=personne.strip()
+        envoie=[""]*9
+        envoie[0]=personne
+        envoie[8]='\n'
+        place=1
+        for action in listeaction:
+            stat=[0,0,0]
+            with open(joueur,'r') as fic:
+                for ligne in fic:
+                    doc=ligne.strip()
+                    doc=ligne.split(',')
+                    if doc[0]==action:
+                        stat[0]=stat[0]+1
+                        if doc[1]=='reussi':
+                            stat[1]=stat[1]+1
+                        else:
+                            stat[2]=stat[2]+1
+            if stat[0]!=0:
+                pourcentage=(stat[1]/stat[0])*100
+                pourcentage=round(pourcentage,2)
+                pourcentage=str(pourcentage)
+                stat[0]=str(stat[0])
+                stat[1]=str(stat[1])
+                case=[stat[1]," réussi sur ",stat[0]," soit ",pourcentage,"%"]
+                case="".join(case)
+                envoie[place]=case
+                place=place+1
+            else:
+                envoie[place]="Manque d'information"
+                place=place+1
+        envoie=",".join(envoie)
+        envoie=envoie.replace(',,',',')
+        with open('stat_general.csv','a') as fic:
+            fic.write(envoie)
+    showinfo('', 'Un tableur a été crée avec toutes les statistiques de chaque joueur')
+
+def boutontableur():
+    """Affiche un bouton pour activer la fonction "tableur"""
+    Button(fenetre,text="Tableur",command=tableur).grid(row=2,column=19)
+
+
 def boutonexit():
     """Affiche unn bouton pour sortir du programme et pour effacer ou pas les données"""
     sortir= Button(fenetre,text='Quitter',command=exit).grid(row=6,column=19)
@@ -366,17 +458,19 @@ def exit():
         fenetre.destroy()
 
 
-joueurselec=[""]*9
+joueurselec=[""]*14
 f=Tk()
-mesjoueur()
+veriffichier()
 f.mainloop()
+
+
 
 zone=[0,1001,0,501]
 posx='none'
 joueur='none'
 action='none'
 reussite='none'
-
+listeaction=["but","passe","stopprovqué","stopsubit","balleperdu","interception","arret"]
 fenetre =Tk()
 affichageterrain()
 pourcentage=Label(fenetre)
@@ -388,7 +482,6 @@ affichagejoueur()
 validation()
 boutonexit()
 affichagelouperreussi()
-veriffichier()
 fenetre.mainloop()
 
 
