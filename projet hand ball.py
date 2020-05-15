@@ -3,36 +3,44 @@ from tkinter.messagebox import*
 from math import *
 import os.path
 
-def veriffichier():
+def veriffichier(listenomfichier):
     """verifier l'état des fichier
     si ils n'existent pas, il les créent
     si ils existent, il vérifi si ils sont vide, si non demande si on garde les données"""
-    global listenomfichier,action,joueur,joueurselec,f
-
-    listenomfichier=["J1.csv","J2.csv","J3.csv","J4.csv","J5.csv","J6.csv","J7.csv","JA1.csv","JA2.csv","JA3.csv","JA4.csv","JA5.csv","JA6.csv","JA7.csv"]
+    global f, joueurselec
     if os.path.isfile('J1.csv'):
         #le fichier existe
+        rechercheselec()
+        indicjoueur=[""]*9
+        indicjoueur[0]="Les joueurs séléctionner était :"
+        for joueur in range(7):
+            indicjoueur[0]="Les joueurs séléctionner était :"
+            if joueur <2:
+                indicjoueur[1+joueur]=joueurselec[joueur]
+            else:
+                indicjoueur[3]="\n;"
+                indicjoueur[2+joueur]=joueurselec[joueur]
+        indicjoueur=", ".join(indicjoueur)
+        indicjoueur=indicjoueur.replace(";,","")
         for fichier in listenomfichier:
             with open(fichier) as fic:
                 if fic.readline()!="":
                     if fic.readline()!="":
-                        if askyesno('','Il existe déjà des données enregistrées souhaiter vous les effacer?',parent=f):
-                            if askyesno('','Voulez vous garder les joueurs séléctionné la fois précédente ?',parent=f):
-                                rechercheselec()
+                        if askyesno('','Il existe déjà des données enregistrées souhaiter vous les effacer?\n\n'+indicjoueur,parent=f):
+                            if askyesno('','Voulez vous garder les joueurs séléctionné la fois précédente ?\n\n'+indicjoueur,parent=f):
                                 creafichier()
                                 f.destroy()
                                 return
                             else:
+                                showinfo('','Toutes les données ont été supprimées, veuillez séléctionner les nouveaux joueurs',parent=f)
                                 mesjoueur()
-                                showinfo('','Toutes données ont été supprimées',parent=f)
                                 return
                         else:
-                            showinfo('','Les données que vous allez enregistrés seront ajoutées aux anciennes',parent=f)
+                            showinfo('','Les données que vous allez enregistrés seront ajoutées aux anciennes\n\n'+indicjoueur,parent=f)
                             f.destroy()
                             return
                     else:
-                        if askyesno('','Voulez vous garder les joueurs séléctionné la fois précédente ?',parent=f):
-                            rechercheselec()
+                        if askyesno('','Voulez vous garder les joueurs séléctionné la fois précédente ?\n\n'+indicjoueur,parent=f):
                             creafichier()
                             f.destroy()
                             return
@@ -86,7 +94,8 @@ def qljoueur(joueur):
 
 def mesjoueur():
     """cherche dans le document les prénom-numéro des joueurs et affiche des boutons avec les nom récupéré"""
-    global f
+    global f,joueurselec
+    joueurselec=[""]*14
     with open('nom_joueur.txt','r') as fic:
         fic.readline()
         nom=fic.readline()
@@ -457,13 +466,11 @@ def exit():
     else:
         fenetre.destroy()
 
-
+listenomfichier=["J1.csv","J2.csv","J3.csv","J4.csv","J5.csv","J6.csv","J7.csv","JA1.csv","JA2.csv","JA3.csv","JA4.csv","JA5.csv","JA6.csv","JA7.csv"]
 joueurselec=[""]*14
 f=Tk()
-veriffichier()
+veriffichier(listenomfichier)
 f.mainloop()
-
-
 
 zone=[0,1001,0,501]
 posx='none'
