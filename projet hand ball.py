@@ -7,7 +7,8 @@ def veriffichier(listenomfichier):
     """verifier l'état des fichier
     si ils n'existent pas, il les créent
     si ils existent, il vérifi si ils sont vide, si non demande si on garde les données"""
-    global f, joueurselec
+    global f, joueurselec,result
+    nbficvide=0
     if os.path.isfile('J1.csv'):
         #le fichier existe
         rechercheselec()
@@ -25,35 +26,44 @@ def veriffichier(listenomfichier):
         for fichier in listenomfichier:
             with open(fichier) as fic:
                 if fic.readline()!="":
+                    #Des joueurs ont déjà était séléctionné
                     if fic.readline()!="":
+                        #Il y a des informations dans un fichier
                         if askyesno('','Il existe déjà des données enregistrées souhaiter vous les effacer?\n\n'+indicjoueur,parent=f):
                             if askyesno('','Voulez vous garder les joueurs séléctionné la fois précédente ?\n\n'+indicjoueur,parent=f):
                                 creafichier()
                                 f.destroy()
-                                return
                             else:
                                 showinfo('','Toutes les données ont été supprimées, veuillez séléctionner les nouveaux joueurs',parent=f)
                                 mesjoueur()
-                                return
+                            return
                         else:
-                            showinfo('','Les données que vous allez enregistrés seront ajoutées aux anciennes\n\n'+indicjoueur,parent=f)
-                            f.destroy()
+                            if askyesno('','Voulez-vous aller analyser les données maintenant'):
+                                f.destroy()
+                                result=1
+                            else:
+                                showinfo('','Les données que vous allez enregistrés seront ajoutées aux anciennes\n\n'+indicjoueur,parent=f)
+                                f.destroy()
                             return
                     else:
-                        if askyesno('','Voulez vous garder les joueurs séléctionné la fois précédente ?\n\n'+indicjoueur,parent=f):
-                            creafichier()
-                            f.destroy()
-                            return
-                        else:
-                            mesjoueur()
+                        #Il n'y aucune informations séléctionné
+                        nbficvide=nbficvide+1
+                        if nbficvide==13:
+                            if askyesno('','Voulez vous garder les joueurs séléctionné la fois précédente ?\n\n'+indicjoueur,parent=f):
+                                creafichier()
+                                f.destroy()
+                            else:
+                                mesjoueur()
                             return
                 else:
+                    #Aucun joueur séléctionné
                     mesjoueur()
                     return
     else:
         #le fichier n'existe pas
         mesjoueur()
         return
+
 
 def creafichier():
     """Crée tout les fichiers dont le programme a besoin, avec à l'intérieur en première ligne le nom du joueur"""
@@ -246,8 +256,6 @@ def emplacementdonner(event):
         curseur= canvas.create_oval(posx-3,posy-3,posx+3,posy+3,fill="black")
     else:
         showerror('Vous avez cliqué en dehors du terrian','Veulliez cliquer dans le terrain')
-
-
 
 def validation():
     """bouton qui valide les résultat rentré et fait enregistrer les valeur"""
@@ -449,7 +457,6 @@ def boutontableur():
     """Affiche un bouton pour activer la fonction "tableur"""
     Button(fenetre,text="Tableur",command=tableur).grid(row=2,column=19)
 
-
 def boutonexit():
     """Affiche unn bouton pour sortir du programme et pour effacer ou pas les données"""
     sortir= Button(fenetre,text='Quitter',command=exit).grid(row=6,column=19)
@@ -468,6 +475,7 @@ def exit():
 
 listenomfichier=["J1.csv","J2.csv","J3.csv","J4.csv","J5.csv","J6.csv","J7.csv","JA1.csv","JA2.csv","JA3.csv","JA4.csv","JA5.csv","JA6.csv","JA7.csv"]
 joueurselec=[""]*14
+result=0
 f=Tk()
 veriffichier(listenomfichier)
 f.mainloop()
@@ -489,12 +497,8 @@ affichagejoueur()
 validation()
 boutonexit()
 affichagelouperreussi()
+if result==1:
+    action=""
+    joueur="J1.csv"
+    selectionresultat()
 fenetre.mainloop()
-
-
-
-
-
-
-
-
