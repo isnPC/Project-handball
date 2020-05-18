@@ -411,46 +411,69 @@ def affichagestat():
 def tableur():
     """récupère toutes les infos dans tout les fichier
     Crée un grand fichier avec le nombre de réusite sur le nombre totale d'action et le pourcentage de réussite pour chaque action de chaque joueur"""
-    global listenomfichier,listeaction
+    global listeaction
+    moyenneglobal=[0]*7
+    listenomfichier=[["J1.csv","J2.csv","J3.csv","J4.csv","J5.csv","J6.csv","J7.csv"],["JA1.csv","JA2.csv","JA3.csv","JA4.csv","JA5.csv","JA6.csv","JA7.csv"]]
     with open('stat_general.csv','w') as fic:
-            fic.write("joueur/action,But,Passe,Stop provoqué,Stop subit,Balle perdu,Interception,Arrêt,\n")
-    for joueur in listenomfichier:
-        with open(joueur,'r') as fic:
-            personne=fic.readline()
-        personne=personne.strip()
-        envoie=[""]*9
-        envoie[0]=personne
-        envoie[8]='\n'
-        place=1
-        for action in listeaction:
-            stat=[0,0,0]
+            fic.write("joueur/action,But,Passe,Stop provoque,Stop subit,Balle perdu,Interception,Arret,\n")
+    for moy in range(2):
+        moyenne=[0]*7
+        infoabs=[0]*7
+        for joueur in listenomfichier[moy]:
             with open(joueur,'r') as fic:
-                for ligne in fic:
-                    doc=ligne.strip()
-                    doc=ligne.split(',')
-                    if doc[0]==action:
-                        stat[0]=stat[0]+1
-                        if doc[1]=='reussi':
-                            stat[1]=stat[1]+1
-                        else:
-                            stat[2]=stat[2]+1
-            if stat[0]!=0:
-                pourcentage=(stat[1]/stat[0])*100
-                pourcentage=round(pourcentage,2)
-                pourcentage=str(pourcentage)
-                stat[0]=str(stat[0])
-                stat[1]=str(stat[1])
-                case=[stat[1]," réussi sur ",stat[0]," soit ",pourcentage,"%"]
-                case="".join(case)
-                envoie[place]=case
-                place=place+1
+                personne=fic.readline()
+            personne=personne.strip()
+            envoie=[""]*9
+            envoie[0]=personne
+            envoie[8]='\n'
+            place=1
+            for action in listeaction:
+                stat=[0,0,0]
+                with open(joueur,'r') as fic:
+                    for ligne in fic:
+                        doc=ligne.strip()
+                        doc=ligne.split(',')
+                        if doc[0]==action:
+                            stat[0]=stat[0]+1
+                            if doc[1]=='reussi':
+                                stat[1]=stat[1]+1
+                            else:
+                                stat[2]=stat[2]+1
+                if stat[0]!=0:
+                    pourcentage=(stat[1]/stat[0])*100
+                    pourcentage=round(pourcentage,2)
+                    moyenne[place-1]=moyenne[place-1]+pourcentage
+                    pourcentage=str(pourcentage)
+                    stat[0]=str(stat[0])
+                    stat[1]=str(stat[1])
+                    case=[stat[1]," reussi sur ",stat[0]," soit ",pourcentage,"%"]
+                    case="".join(case)
+                    envoie[place]=case
+                    place=place+1
+                else:
+                    envoie[place]="Manque d'information"
+                    infoabs[place-1]=infoabs[place-1]+1
+                    place=place+1
+            envoie=",".join(envoie)
+            envoie=envoie.replace(',,',',')
+            with open('stat_general.csv','a') as fic:
+                fic.write(envoie)
+        for act in range(7):
+            if infoabs[act]==7:
+                moyenne=["Il n y a aucune informations"]*7
             else:
-                envoie[place]="Manque d'information"
-                place=place+1
-        envoie=",".join(envoie)
-        envoie=envoie.replace(',,',',')
+                moyenne[act]=moyenne[act]/(7-infoabs[act])
+                moyenne[act]=round(moyenne[act])
+                moyenneglobal[act]=moyenneglobal[act]+moyenne[act]
+                moyenne[act]=str(moyenne[act])
         with open('stat_general.csv','a') as fic:
-            fic.write(envoie)
+                fic.write("Moyenne du pourcentage du reussite pour l'equipe,")
+                for moyen in range(7):
+                    fic.write(moyenne[moyen])
+                    fic.write(",")
+                fic.write("\n")
+    with open('stat_general.csv','a') as fic:
+        fic.write("Moyenne du pourcentage du reussite pour les 2 equipes,=(B9+B17)/2,=(C9+C17)/2,=(D9+D17)/2,=(E9+E17)/2,=(F9+F17)/2,=(G9+G17)/2,=(H9+H17)/2")
     showinfo('', 'Un tableur a été crée avec toutes les statistiques de chaque joueur')
 
 def boutontableur():
@@ -473,19 +496,21 @@ def exit():
     else:
         fenetre.destroy()
 
-listenomfichier=["J1.csv","J2.csv","J3.csv","J4.csv","J5.csv","J6.csv","J7.csv","JA1.csv","JA2.csv","JA3.csv","JA4.csv","JA5.csv","JA6.csv","JA7.csv"]
-joueurselec=[""]*14
-result=0
-f=Tk()
-veriffichier(listenomfichier)
-f.mainloop()
 
-zone=[0,1001,0,501]
 posx='none'
 joueur='none'
 action='none'
 reussite='none'
 listeaction=["but","passe","stopprovqué","stopsubit","balleperdu","interception","arret"]
+listenomfichier=["J1.csv","J2.csv","J3.csv","J4.csv","J5.csv","J6.csv","J7.csv","JA1.csv","JA2.csv","JA3.csv","JA4.csv","JA5.csv","JA6.csv","JA7.csv"]
+zone=[0,1001,0,501]
+joueurselec=[""]*14
+result=0
+
+f=Tk()
+veriffichier(listenomfichier)
+f.mainloop()
+
 fenetre =Tk()
 affichageterrain()
 pourcentage=Label(fenetre)
