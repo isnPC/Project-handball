@@ -1,2 +1,2 @@
 #liste des joueur écrit:prénom-numéro et séparé par des ;
-Serkan-1;Emilien-2;Alexis-3;Guillaume-4;Corentin-5;Florian-6;Esteban-7;Mathias-8;Anthony-9;Luc-10
+Serkan-1;Emilien-2;Alexis-3;Guillaume-4;Corentin-5;Florian-6;Esteban-7;Mathias-8;Anthony-9;Luc-10;Dorian-11;Mathieu-12
