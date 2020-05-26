@@ -26,32 +26,23 @@ def veriffichier(listenomfichier):
                     if fic.readline()!="":
                         #Il y a des informations dans un fichier
                         if askyesno('','Il existe déjà des données enregistrées souhaiter vous les effacer?\n\n'+indicjoueur,parent=f):
-                            if askyesno('','Voulez vous garder les joueurs séléctionné la fois précédente ?\n\n'+indicjoueur,parent=f):
-                                creafichier()
-                                f.destroy()
-                            else:
-                                showinfo('','Toutes les données ont été supprimées et les nouveaux joueurs on était séléctionnés',parent=f)
-                                mesjoueur()
-                                f.destroy()
+                            mesjoueur()
+                            f.destroy()
                             return
                         else:
                             if askyesno('','Voulez-vous aller analyser les données maintenant'):
                                 f.destroy()
                                 result=1
                             else:
-                                showinfo('','Les données que vous allez enregistrés seront ajoutées aux anciennes\n\n'+indicjoueur,parent=f)
+                                showinfo('','Les données que vous allez enregistrés seront ajoutées aux anciennes',parent=f)
                                 f.destroy()
                             return
                     else:
-                        #Il n'y aucune informations séléctionné
+                        #Il n'y aucune informations dans le fichier
                         nbficvide=nbficvide+1
                         if nbficvide==24:
-                            if askyesno('','Voulez vous garder les joueurs séléctionné la fois précédente ?\n\n'+indicjoueur,parent=f):
-                                creafichier()
-                                f.destroy()
-                            else:
-                                mesjoueur()
-                                f.destroy()
+                            mesjoueur()
+                            f.destroy()
                             return
                 else:
                     #Aucun joueur séléctionné
@@ -103,7 +94,7 @@ def qljoueur(joueur):
 
 
 def mesjoueur():
-    """cherche dans le document les prénom-numéro des joueurs et affiche des boutons avec les nom récupéré"""
+    """cherche dans le document les prénom-numéro des joueurs et les stochent dans une liste"""
     global joueurselec
     with open('nom_joueur.txt','r') as fic:
         fic.readline()
@@ -150,22 +141,22 @@ def affichagejoueur():
     Button(fenetre,text=joueurselec[6],command=lambda : selectionjoueur("J7.csv"),fg="blue").grid(row=3,column=7)
     Button(fenetre,text=joueurselec[7],command=lambda : selectionjoueur("J8.csv"),fg="blue").grid(row=3,column=8)
     Button(fenetre,text=joueurselec[8],command=lambda : selectionjoueur("J9.csv"),fg="blue").grid(row=3,column=9)
-    Button(fenetre,text=joueurselec[9],command=lambda : selectionjoueur("J9.csv"),fg="blue").grid(row=3,column=10)
-    Button(fenetre,text=joueurselec[10],command=lambda : selectionjoueur("J9.csv"),fg="blue").grid(row=3,column=11)
-    Button(fenetre,text=joueurselec[11],command=lambda : selectionjoueur("J9.csv"),fg="blue").grid(row=3,column=12)
+    Button(fenetre,text=joueurselec[9],command=lambda : selectionjoueur("J10.csv"),fg="blue").grid(row=3,column=10)
+    Button(fenetre,text=joueurselec[10],command=lambda : selectionjoueur("J11.csv"),fg="blue").grid(row=3,column=11)
+    Button(fenetre,text=joueurselec[11],command=lambda : selectionjoueur("J12.csv"),fg="blue").grid(row=3,column=12)
 
-    Button(fenetre,text=joueurselec[12],command=lambda : selectionjoueur("JA1.csv"),fg="blue").grid(row=5,column=1)
-    Button(fenetre,text=joueurselec[13],command=lambda : selectionjoueur("JA2.csv"),fg="blue").grid(row=5,column=2)
-    Button(fenetre,text=joueurselec[14],command=lambda : selectionjoueur("JA3.csv"),fg="blue").grid(row=5,column=3)
-    Button(fenetre,text=joueurselec[15],command=lambda : selectionjoueur("JA4.csv"),fg="blue").grid(row=5,column=4)
-    Button(fenetre,text=joueurselec[16],command=lambda : selectionjoueur("JA5.csv"),fg="blue").grid(row=5,column=5)
-    Button(fenetre,text=joueurselec[17],command=lambda : selectionjoueur("JA6.csv"),fg="blue").grid(row=5,column=6)
-    Button(fenetre,text=joueurselec[18],command=lambda : selectionjoueur("JA7.csv"),fg="blue").grid(row=5,column=7)
-    Button(fenetre,text=joueurselec[19],command=lambda : selectionjoueur("JA8.csv"),fg="blue").grid(row=5,column=8)
-    Button(fenetre,text=joueurselec[20],command=lambda : selectionjoueur("JA9.csv"),fg="blue").grid(row=5,column=9)
-    Button(fenetre,text=joueurselec[21],command=lambda : selectionjoueur("JA9.csv"),fg="blue").grid(row=5,column=10)
-    Button(fenetre,text=joueurselec[22],command=lambda : selectionjoueur("JA9.csv"),fg="blue").grid(row=5,column=11)
-    Button(fenetre,text=joueurselec[23],command=lambda : selectionjoueur("JA9.csv"),fg="blue").grid(row=5,column=12)
+    Button(fenetre,text=joueurselec[12],command=lambda : selectionjoueur("JA1.csv"),fg="orange").grid(row=5,column=1)
+    Button(fenetre,text=joueurselec[13],command=lambda : selectionjoueur("JA2.csv"),fg="orange").grid(row=5,column=2)
+    Button(fenetre,text=joueurselec[14],command=lambda : selectionjoueur("JA3.csv"),fg="orange").grid(row=5,column=3)
+    Button(fenetre,text=joueurselec[15],command=lambda : selectionjoueur("JA4.csv"),fg="orange").grid(row=5,column=4)
+    Button(fenetre,text=joueurselec[16],command=lambda : selectionjoueur("JA5.csv"),fg="orange").grid(row=5,column=5)
+    Button(fenetre,text=joueurselec[17],command=lambda : selectionjoueur("JA6.csv"),fg="orange").grid(row=5,column=6)
+    Button(fenetre,text=joueurselec[18],command=lambda : selectionjoueur("JA7.csv"),fg="orange").grid(row=5,column=7)
+    Button(fenetre,text=joueurselec[19],command=lambda : selectionjoueur("JA8.csv"),fg="orange").grid(row=5,column=8)
+    Button(fenetre,text=joueurselec[20],command=lambda : selectionjoueur("JA9.csv"),fg="orange").grid(row=5,column=9)
+    Button(fenetre,text=joueurselec[21],command=lambda : selectionjoueur("JA10.csv"),fg="orange").grid(row=5,column=10)
+    Button(fenetre,text=joueurselec[22],command=lambda : selectionjoueur("JA11.csv"),fg="orange").grid(row=5,column=11)
+    Button(fenetre,text=joueurselec[23],command=lambda : selectionjoueur("JA12.csv"),fg="orange").grid(row=5,column=12)
     indicJ=Label(fenetre)
 
 def selectionjoueur(place):
