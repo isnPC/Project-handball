@@ -125,7 +125,7 @@ def affichagejoueur():
     global indicJ,labjoueur,labjoueurad
     rechercheselec()
     labjoueur=LabelFrame(fenetre, text="Notre équipe",padx=5,pady=5)
-    labjoueur.grid(row=3,column=1,columnspan=12)
+    labjoueur.grid(row=2,column=0,columnspan=12)
     Button(labjoueur,text=joueurselec[0],command=lambda : selectionjoueur("J1.csv"),fg="blue").grid(row=0,column=0)
     Button(labjoueur,text=joueurselec[1],command=lambda : selectionjoueur("J2.csv"),fg="blue").grid(row=0,column=1)
     Button(labjoueur,text=joueurselec[2],command=lambda : selectionjoueur("J3.csv"),fg="blue").grid(row=0,column=2)
@@ -140,7 +140,7 @@ def affichagejoueur():
     Button(labjoueur,text=joueurselec[11],command=lambda : selectionjoueur("J12.csv"),fg="blue").grid(row=0,column=11)
 
     labjoueurad=LabelFrame(fenetre, text="Equipe adverse",padx=5,pady=5)
-    labjoueurad.grid(row=5,column=1,columnspan=12)
+    labjoueurad.grid(row=3,column=0,columnspan=12)
     Button(labjoueurad,text=joueurselec[12],command=lambda : selectionjoueur("JA1.csv"),fg="orange").grid(row=0,column=0)
     Button(labjoueurad,text=joueurselec[13],command=lambda : selectionjoueur("JA2.csv"),fg="orange").grid(row=0,column=1)
     Button(labjoueurad,text=joueurselec[14],command=lambda : selectionjoueur("JA3.csv"),fg="orange").grid(row=0,column=2)
@@ -173,14 +173,16 @@ def selectionjoueur(place):
 
 def affichageaction():
     """affiche la liste d'action et lance une fonction pour savoir qu'elle est l'action séléctionner"""
-    global indicA
-    Button(fenetre,text='But',command=lambda : selectionaction('but')).grid(row=1,column=3)
-    Button(fenetre,text='Passe',command=lambda : selectionaction('passe')).grid(row=1,column=4)
-    Button(fenetre,text='Stop provoqué',command=lambda : selectionaction('stopprovqué')).grid(row=1,column=5)
-    Button(fenetre,text='Stop subit',command=lambda : selectionaction('stopsubit')).grid(row=1,column=6)
-    Button(fenetre,text='Balle perdu',command=lambda : selectionaction('balleperdu')).grid(row=1,column=7)
-    Button(fenetre,text='Interception',command=lambda : selectionaction('interception')).grid(row=1,column=8)
-    Button(fenetre,text='Arrêt',command=lambda : selectionaction('arret')).grid(row=1,column=9)
+    global indicA, labaction
+    labaction=LabelFrame(fenetre, text="Action",padx=5,pady=5)
+    labaction.grid(row=1,column=3,columnspan=9)
+    Button(labaction,text='But',command=lambda : selectionaction('but')).grid(row=0,column=0)
+    Button(labaction,text='Passe',command=lambda : selectionaction('passe')).grid(row=0,column=1)
+    Button(labaction,text='Stop provoqué',command=lambda : selectionaction('stopprovqué')).grid(row=0,column=2)
+    Button(labaction,text='Stop subit',command=lambda : selectionaction('stopsubit')).grid(row=0,column=3)
+    Button(labaction,text='Balle perdu',command=lambda : selectionaction('balleperdu')).grid(row=0,column=4)
+    Button(labaction,text='Interception',command=lambda : selectionaction('interception')).grid(row=0,column=5)
+    Button(labaction,text='Arrêt',command=lambda : selectionaction('arret')).grid(row=0,column=6)
     indicA=Label(fenetre)
 
 def selectionaction(mouv):
@@ -191,17 +193,17 @@ def selectionaction(mouv):
     indicA.destroy()
 
     num=listeaction.index(action)
-    if num<=6:
-        indicA=Label(fenetre, text="séléctionné↑",bg="green")
-        indicA.grid(row=2,column=3+num)
+
+    indicA=Label(labaction, text="séléctionné↑",bg="green")
+    indicA.grid(row=1,column=num)
 
 def affichagelouperreussi():
     """affiche un bouton pour choisir si l'action et louper ou réussite"""
-    global indicL,reu,loup
-    reu=Button(fenetre,text='Réussi',command=lambda : selectionlouperreussi('reussi'))
-    reu.grid(row=1,column=15)
-    loup=Button(fenetre,text='Louper',command=lambda : selectionlouperreussi('louper'))
-    loup.grid(row=1,column=16)
+    global indicL,lablouperreussi
+    lablouperreussi=LabelFrame(fenetre, text="L'action est",padx=5,pady=5)
+    lablouperreussi.grid(row=1,column=12,columnspan=15)
+    reu=Button(lablouperreussi,text='Réussi',command=lambda : selectionlouperreussi('reussi')).grid(row=0,column=0)
+    loup=Button(lablouperreussi,text='Louper',command=lambda : selectionlouperreussi('louper')).grid(row=0,column=1)
     indicL=Label(fenetre)
 
 def selectionlouperreussi(lp):
@@ -211,15 +213,15 @@ def selectionlouperreussi(lp):
     reussite=lp
     indicL.destroy()
     if reussite=="reussi":
-        indicL=Label(fenetre, text="séléctionné↑",bg="green")
-        indicL.grid(row=2,column=15)
+        indicL=Label(lablouperreussi, text="séléctionné↑",bg="green")
+        indicL.grid(row=1,column=0)
     else:
-        indicL=Label(fenetre, text="séléctionné↑",bg="red")
-        indicL.grid(row=2,column=16)
+        indicL=Label(lablouperreussi, text="séléctionné↑",bg="red")
+        indicL.grid(row=1,column=1)
 
 def affichageresultat():
     """affiche un bouton résultat qui lance la fonction pour afficher la partit statistique"""
-    Button(fenetre,text='Résultat',command=selectionresultat).grid(row=4,column=19)
+    Button(fenetre,text='Résultat',command=selectionresultat).grid(row=2,column=19)
 
 def selectionresultat():
     """Lance toute les fonctions qui permettent de voir les statistique en fonction de l'action et du joueur séléctionner"""
@@ -229,8 +231,8 @@ def selectionresultat():
         affichageposition()
         affichagestat()
         affichagestatzone()
-        reu.destroy()
-        loup.destroy()
+        lablouperreussi.destroy()
+        valid.destroy()
         boutontableur()
 
 def emplacementdonner(event):
@@ -251,7 +253,9 @@ def emplacementdonner(event):
 
 def validation():
     """bouton qui valide les résultat rentré et fait enregistrer les valeur"""
-    Button(fenetre,text='Validé',command=enregistrerfichier).grid(row=2,column=19)
+    global valid
+    valid=Button(fenetre,text='Validé',command=enregistrerfichier)
+    valid.grid(row=1,column=19)
 
 def enregistrerfichier():
     """stocke les information dans un fichier excel
@@ -286,13 +290,24 @@ def enregistrerfichier():
 
 def choixzone():
     """affiche 7 boutons pour savoir si l'utilisateur veut voir les actions sur tout le terrain ou seulement sur une partit"""
-    Button(fenetre,text='Tout le terrain',command=lambda:zonechoisi([0,1001,0,501])).grid(row=1,column=17)
+    """Button(fenetre,text='Tout le terrain',command=lambda:zonechoisi([0,1001,0,501])).grid(row=1,column=17)
     Button(fenetre,text='Avant droit',command=lambda:zonechoisi([666,1001,250,501])).grid(row=5,column=18)
     Button(fenetre,text='Avant gauche',command=lambda:zonechoisi([666,1001,0,250])).grid(row=3,column=18)
     Button(fenetre,text='Milieu droit',command=lambda:zonechoisi([333,666,250,501])).grid(row=5,column=17)
     Button(fenetre,text='Milieu gauche',command=lambda:zonechoisi([333,666,0,250])).grid(row=3,column=17)
     Button(fenetre,text='Arrière droit',command=lambda:zonechoisi([0,333,250,501])).grid(row=5,column=16)
-    Button(fenetre,text='Arrière gauche',command=lambda:zonechoisi([0,333,0,250])).grid(row=3,column=16)
+    Button(fenetre,text='Arrière gauche',command=lambda:zonechoisi([0,333,0,250])).grid(row=3,column=16)"""
+    labpos=LabelFrame(fenetre,padx=5,pady=5)
+    labpos.grid(row=1,column=16,rowspan=6)
+    bouton1 = Radiobutton(labpos, text="Tout le terrain",command=lambda:zonechoisi([0,1001,0,501]),indicatoron =0).pack()
+    bouton2 = Radiobutton(labpos, text="Avant droit",command=lambda:zonechoisi([666,1001,250,501]),indicatoron=0).pack()
+    bouton3 = Radiobutton(labpos, text="Avant gauche",command=lambda:zonechoisi([666,1001,0,250]),indicatoron=0).pack()
+    bouton4 = Radiobutton(labpos, text='Milieu droit',command=lambda:zonechoisi([333,666,250,501]),indicatoron=0).pack()
+    bouton5 = Radiobutton(labpos, text='Milieu gauche',command=lambda:zonechoisi([333,666,0,250]),indicatoron=0).pack()
+    bouton6 = Radiobutton(labpos, text='Arrière droit',command=lambda:zonechoisi([0,333,250,501]),indicatoron=0).pack()
+    bouton7 = Radiobutton(labpos, text='Arrière gauche',command=lambda:zonechoisi([0,333,0,250]),indicatoron=0).pack()
+
+
 
 def zonechoisi(endroit):
     """retourne les coordonnées de la zone où l'utilisateur veut voir les emplacement sous la forme[limitegauchex,limdroitex,limitehauty,limitebasy]"""
@@ -358,17 +373,18 @@ def affichageposition():
 def affichagestatzone():
     """Entrée: la zone choisit, nombre de reussite dans la zone choisit et le nombre d'echecs dans la zone
     Affiche le pourcentage de réussite, le nombre de réussite et le nombre d'echecs pour la zone séléctionnez"""
-    global pourcentage, R, L
+    global pourcentage, R, L, labstat
     pourcentage.destroy()
     R.destroy()
     L.destroy()
+
     if zone !=[0,1001,0,501]:
         if (nbreu+nbeche)==0:
-            pourcentage=Label(fenetre, text="Pas d'informations",width="21")
+            pourcentage=Label(labstat, text="Pas d'informations",width="21")
             pourcentage.grid(row=2,column=15)
-            R=Label(fenetre, text="Pas d'informations",width="21", bg = "green")
+            R=Label(labstat, text="Pas d'informations",width="21", bg = "green")
             R.grid(row=4,column=15)
-            L=Label(fenetre, text="Pas d'informations",width="21", bg="red")
+            L=Label(labstat, text="Pas d'informations",width="21", bg="red")
             L.grid(row=6,column=15)
         else:
             pourreu=(nbreu/(nbreu+nbeche))*100
@@ -376,29 +392,32 @@ def affichagestatzone():
             pourreu="Pourcentage réussite "+str(pourreu)+"%"
             nbreussite=str(nbreu)+" "+action+" reussit"
             nbechec=str(nbeche)+" "+action+" louper"
-            pourcentage=Label(fenetre, text=pourreu,width="21")
+            pourcentage=Label(labstat, text=pourreu,width="21")
             pourcentage.grid(row=2,column=15)
-            R=Label(fenetre, text=nbreussite,width="21", bg = "green")
+            R=Label(labstat, text=nbreussite,width="21", bg = "green")
             R.grid(row=4,column=15)
-            L=Label(fenetre, text=nbechec,width="21", bg="red")
+            L=Label(labstat, text=nbechec,width="21", bg="red")
             L.grid(row=6,column=15)
 
 def affichagestat():
      """Entrée: le pourcentage de réussite, le nombre d'action réussit et louper a partir du fichier exel et l'action séléctionner
      Affiche le pourcentage de réussite, le nombre de réussite et le nombre d'echecs pour l'action séléctionnez"""
+     global labstat
+     labstat=LabelFrame(fenetre, text="Les stats sont:",padx=5,pady=5)
+     labstat.grid(row=1,column=15,rowspan=4)
      if stat[0]==0:
-        Label(fenetre, text="Manque d'informations",width="21").grid(row=1,column=15)
-        Label(fenetre, text="Manque d'informations",width="21", bg = "green").grid(row=3,column=15)
-        Label(fenetre, text="Manque d'informations",width="21", bg="red").grid(row=5,column=15)
+        Label(labstat, text="Manque d'informations",width="21").grid(row=1,column=15)
+        Label(labstat, text="Manque d'informations",width="21", bg = "green").grid(row=3,column=15)
+        Label(labstat, text="Manque d'informations",width="21", bg="red").grid(row=5,column=15)
      else:
         pourreu=(stat[1]/stat[0])*100
         pourreu=round(pourreu,2)
         pourreu="Pourcentage réussite "+str(pourreu)+"%"
         nbreussite=str(stat[1])+" "+action+" reussit en tout"
         nbechec=str(stat[4])+" "+action+" louper en tout"
-        Label(fenetre, text=pourreu,width="21").grid(row=1,column=15)
-        Label(fenetre, text=nbreussite,width="21", bg = "green").grid(row=3,column=15)
-        Label(fenetre, text=nbechec,width="21", bg="red").grid(row=5,column=15)
+        Label(labstat, text=pourreu,width="21").grid(row=1,column=15)
+        Label(labstat, text=nbreussite,width="21", bg = "green").grid(row=3,column=15)
+        Label(labstat, text=nbechec,width="21", bg="red").grid(row=5,column=15)
 
 def tableur():
     """récupère toutes les infos dans tout les fichier
@@ -468,11 +487,11 @@ def tableur():
 
 def boutontableur():
     """Affiche un bouton pour activer la fonction "tableur"""
-    Button(fenetre,text="Tableur",command=tableur).grid(row=2,column=19)
+    Button(fenetre,text="Tableur",command=tableur).grid(row=1,column=19)
 
 def boutonexit():
     """Affiche unn bouton pour sortir du programme et pour effacer ou pas les données"""
-    sortir= Button(fenetre,text='Quitter',command=exit).grid(row=6,column=19)
+    sortir= Button(fenetre,text='Quitter',command=exit).grid(row=3,column=19)
 
 def exit():
     """Demande si il faut enlever toutes les informations de chaque fichier pour pouvoir re-écrire sur les même fichiers à la prochaine utilisation
