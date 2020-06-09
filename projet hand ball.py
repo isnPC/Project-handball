@@ -200,8 +200,8 @@ def selectionaction(mouv):
 def affichagelouperreussi():
     """affiche un bouton pour choisir si l'action et louper ou réussite"""
     global indicL,lablouperreussi
-    lablouperreussi=LabelFrame(fenetre, text="L'action est",padx=5,pady=5)
-    lablouperreussi.grid(row=1,column=12,columnspan=15)
+    lablouperreussi=LabelFrame(fenetre, text="L'action est",padx=5)
+    lablouperreussi.grid(row=1,column=12,columnspan=14)
     reu=Button(lablouperreussi,text='Réussi',command=lambda : selectionlouperreussi('reussi')).grid(row=0,column=0)
     loup=Button(lablouperreussi,text='Louper',command=lambda : selectionlouperreussi('louper')).grid(row=0,column=1)
     indicL=Label(fenetre)
@@ -381,11 +381,11 @@ def affichagestatzone():
     if zone !=[0,1001,0,501]:
         if (nbreu+nbeche)==0:
             pourcentage=Label(labstat, text="Pas d'informations",width="21")
-            pourcentage.grid(row=2,column=15)
+            pourcentage.grid(row=2,column=0)
             R=Label(labstat, text="Pas d'informations",width="21", bg = "green")
-            R.grid(row=4,column=15)
+            R.grid(row=4,column=0)
             L=Label(labstat, text="Pas d'informations",width="21", bg="red")
-            L.grid(row=6,column=15)
+            L.grid(row=6,column=0)
         else:
             pourreu=(nbreu/(nbreu+nbeche))*100
             pourreu=round(pourreu,2)
@@ -393,11 +393,11 @@ def affichagestatzone():
             nbreussite=str(nbreu)+" "+action+" reussit"
             nbechec=str(nbeche)+" "+action+" louper"
             pourcentage=Label(labstat, text=pourreu,width="21")
-            pourcentage.grid(row=2,column=15)
+            pourcentage.grid(row=2,column=0)
             R=Label(labstat, text=nbreussite,width="21", bg = "green")
-            R.grid(row=4,column=15)
+            R.grid(row=4,column=0)
             L=Label(labstat, text=nbechec,width="21", bg="red")
-            L.grid(row=6,column=15)
+            L.grid(row=6,column=0)
 
 def affichagestat():
      """Entrée: le pourcentage de réussite, le nombre d'action réussit et louper a partir du fichier exel et l'action séléctionner
@@ -406,18 +406,18 @@ def affichagestat():
      labstat=LabelFrame(fenetre, text="Les stats sont:",padx=5,pady=5)
      labstat.grid(row=1,column=15,rowspan=4)
      if stat[0]==0:
-        Label(labstat, text="Manque d'informations",width="21").grid(row=1,column=15)
-        Label(labstat, text="Manque d'informations",width="21", bg = "green").grid(row=3,column=15)
-        Label(labstat, text="Manque d'informations",width="21", bg="red").grid(row=5,column=15)
+        Label(labstat, text="Manque d'informations",width="21").grid(row=1,column=0)
+        Label(labstat, text="Manque d'informations",width="21", bg = "green").grid(row=3,column=0)
+        Label(labstat, text="Manque d'informations",width="21", bg="red").grid(row=5,column=0)
      else:
         pourreu=(stat[1]/stat[0])*100
         pourreu=round(pourreu,2)
         pourreu="Pourcentage réussite "+str(pourreu)+"%"
         nbreussite=str(stat[1])+" "+action+" reussit en tout"
         nbechec=str(stat[4])+" "+action+" louper en tout"
-        Label(labstat, text=pourreu,width="21").grid(row=1,column=15)
-        Label(labstat, text=nbreussite,width="21", bg = "green").grid(row=3,column=15)
-        Label(labstat, text=nbechec,width="21", bg="red").grid(row=5,column=15)
+        Label(labstat, text=pourreu,width="21").grid(row=1,column=0)
+        Label(labstat, text=nbreussite,width="21", bg = "green").grid(row=3,column=0)
+        Label(labstat, text=nbechec,width="21", bg="red").grid(row=5,column=0)
 
 def tableur():
     """récupère toutes les infos dans tout les fichier
